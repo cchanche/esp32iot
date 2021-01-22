@@ -21,49 +21,12 @@
         margin: 0px auto;
         padding-bottom: 25px;
       }
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 120px;
-        height: 68px;
-      }
-      .switch input {
-        display: none;
-      }
-      .slider {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        border-radius: 6px;
-      }
-      .slider:before {
-        position: absolute;
-        content: "";
-        height: 52px;
-        width: 52px;
-        left: 8px;
-        bottom: 8px;
-        background-color: #fff;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
-        border-radius: 3px;
-      }
-      input:checked + .slider {
-        background-color: #b30000;
-      }
-      input:checked + .slider:before {
-        -webkit-transform: translateX(52px);
-        -ms-transform: translateX(52px);
-        transform: translateX(52px);
-      }
     </style>
   </head>
   <body>
     <h2>ESP Web Server</h2>
     <h4>Send Mail</h4>
+    <img src="http://irt.enseeiht.fr/beylot/photo/photo.jpg" />
     <div id="container">
       <form id="signup">
         <h1>Send an Email</h1>
@@ -78,12 +41,14 @@
     </div>
     ;
     <script>
+      var xhr = new XMLHttpRequest();
       const form = document.getElementById("signup");
       form.addEventListener("submit", (event) => {
         // check required fields
         email = event.target[0].value;
         object = event.target[1].value;
         content = event.target[2].value;
+        console.log(email, object, content);
         xhr.open(
           "GET",
           "/update?email=" +
