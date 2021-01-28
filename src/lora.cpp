@@ -114,7 +114,7 @@ void lora_loop()
     display.drawString(display.getWidth() / 2, display.getHeight() / 2, "Send message...");
     display.display();
     LoRa.beginPacket();
-    LoRa.print("AMNAY TU ME RECOIS ?");
+    LoRa.print("BORIS <3");
     LoRa.endPacket();
     delay(2500);
 #else
