@@ -85,11 +85,11 @@ const char index_html[] PROGMEM = R"rawliteral(
     <div class="content">
       <div class="cards">
         <div class="card temperature">
-          <h4><i class="fas fa-commenting"></i>Lora Messages</h4>
+          <h4><i class="fas fa-comment"></i>Lora Messages</h4>
           <p>
             <span class="reading">
-                <span id="sensor_RSSI">Fetching Sensor Signal</span>
-                <span id="sensor">Fetching Sensor Data</span>
+                <h5 id="sensor_RSSI">Fetching Sensor Signal</h5>
+                <h3 id="sensor">Fetching Sensor Data</h3>
             </span>
           </p>
         </div>
@@ -337,7 +337,7 @@ void loop()
           }
           display.clear();
           display.drawString(display.getWidth() / 2, display.getHeight() / 2, recv);
-          String info = "RSSI = " + String(LoRa.packetRssi());
+          String info = "RSSI = " + String(LoRa.packetRssi() + "dBm");
           display.drawString(display.getWidth() / 2, display.getHeight() / 2 - 16, info);
           display.display();
           events.send(info.c_str(),"sensor_RSSI",millis());
