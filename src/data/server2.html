@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BME680 Web Server</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+    <link rel="icon" href="data:," />
+    <style>
+      html {
+        font-family: Arial;
+        display: inline-block;
+        text-align: center;
+      }
+      p {
+        font-size: 1.2rem;
+      }
+      body {
+        margin: 0;
+      }
+      .topnav {
+        overflow: hidden;
+        background-color: #4b1d3f;
+        color: white;
+        font-size: 1.7rem;
+      }
+      .content {
+        padding: 20px;
+      }
+      .card {
+        background-color: white;
+        box-shadow: 2px 2px 12px 1px rgba(140, 140, 140, 0.5);
+      }
+      .cards {
+        max-width: 1000px;
+        height: 300px;
+        margin: 0 auto;
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+      .reading {
+        font-size: 2.8rem;
+      }
+      .card.temperature {
+        color: #0e7c7b;
+      }
+      .card.mail {
+        color: #d62246;
+      }
+      .card.image {
+        color: #40d622;
+      }
+      .card.serial {
+        color: #000000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topnav">
+      <h3>WEB SERVER</h3>
+      <span id="message">fetching LoRa status...</span>
+    </div>
+    <div class="content">
+      <div class="cards">
+        <div class="card temperature">
+          <h4><i class="fas fa-commenting"></i>Lora Messages</h4>
+          <p>
+            <span class="reading">
+                <span id="sensor_RSSI">Fetching Sensor Signal</span>
+                <span id="sensor">Fetching Sensor Data</span>
+            </span>
+          </p>
+        </div>
+        <div class="card mail">
+          <h4><i class="fas fa-mail"></i>Send a mail</h4>
+          <div id="container">
+            <form id="signup">
+              <small></small>
+              <input type="text" placeholder="Email Address" />
+              <small></small>
+              <input type="text" placeholder="Object" />
+              <small></small>
+              <input type="text" placeholder="Content" />
+              <input type="submit" value="Send" />
+            </form>
+          </div>
+        </div>
+        <div class="card image">
+            <h4>A nice image</h4>
+            <img src="http://irt.enseeiht.fr/beylot/photo/photo.jpg" />
+        </div>
+    </div>
+    <script>
+      if (!!window.EventSource) {
+        var source = new EventSource("/events");
+
+        source.addEventListener(
+          "open",
+          function (e) {
+            console.log("Events Connected");
+          },
+          false
+        );
+        source.addEventListener(
+          "error",
+          function (e) {
+            if (e.target.readyState != EventSource.OPEN) {
+              console.log("Events Disconnected");
+            }
+          },
+          false
+        );
+
+        source.addEventListener(
+          "message",
+          function (e) {
+            console.log("message", e.data);
+            document.getElementById("message").innerHTML = e.data;
+          },
+          false
+        );
+
+        source.addEventListener(
+          "sensor",
+          function (e) {
+            console.log("sensor", e.data);
+            document.getElementById("sensor").innerHTML = e.data;
+          },
+          false
+        );
+
+        source.addEventListener(
+          "sensor_RSSI",
+          function (e) {
+            console.log("sensor_RSSI", e.data);
+            document.getElementById("sensor_RSSI").innerHTML = e.data;
+          },
+          false
+        );
+      }
+      var xhr = new XMLHttpRequest();
+      const form = document.getElementById("signup");
+      form.addEventListener("submit", (event) => {
+        // check required fields
+        email = event.target[0].value;
+        object = event.target[1].value;
+        content = event.target[2].value;
+        console.log(email, object, content);
+        xhr.open(
+          "GET",
+          "/update?email=" +
+            email +
+            "&object=" +
+            object +
+            "&content=" +
+            content,
+          true
+        );
+        xhr.send();
+      })
+    </script>
+  </body>
+</html>

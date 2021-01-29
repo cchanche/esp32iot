@@ -45,7 +45,7 @@ void send_mail(String objet, String email, String content) {
   //Add attach files from SD card
   //Comment these two lines, if no SD card connected
   //Two files that previousely created.
-  smtpData.addAttachFile("/photo.jpg");
+  // smtpData.addAttachFile("/photo.jpg");
   // smtpData.addAttachFile("/text_file.txt");
 
 
