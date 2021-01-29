@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/cchanche/esp32iot">
-    <img src="images/enseeiht.jpeg" alt="Logo" width="80" height="80">
+    <img src="images/enseeiht.jpeg" alt="Logo" width="120" height="120">
   </a>
 
   <h3 align="center">Projet IoT 3A IBDIoT</h3>
@@ -10,7 +10,7 @@
 
 ## A propos du projet
 
-L'idée principale de ce projet était d'utiliser un microcontrôleur ESP32 pour l'envoi de mails.
+L'idée principale de ce projet était d'utiliser un microcontrôleur ESP32 pour l'envoi de mails. Pour la construction du code, nous avons utilisé le [code source constructeur](https://github.com/Xinyuan-LilyGO/TTGO-LoRa-Series).
 
 ## Client mail
 
@@ -22,41 +22,49 @@ A la suite de cela, nous avons décidé d'ajouter une certaine flexibilité au c
 
 ## Communication LoRa
 
-Pour finir, la dernière fonctionnalité implémentée sur notre microcontrôleur ESP32 était la communication pair-à-pair à l'aide du protocole LoRaWAN avec un autre microcontrôleur du même type. L'objectif était, ici, de se placer dans un cas d'utilisation. L'objectif était de prévoir la situation dans laquelle notre microcontrôleur se trouverait en extérieur ou du moins dans une zone non couverte par le WIFI et qu'il voudrait envoyer un signal/une alerte par mail tout de même (d'où l'utilisation d'un protocole longue distance tel que LoRaWAN). Il fallait donc mettre en place cette communication entre les deux microcontrôleurs, puis, s'inspirer grandement de la section précédente pour permettre à celui ayant accès au WIFI d'envoyer le mail.
+Pour finir, la dernière fonctionnalité implémentée sur notre microcontrôleur ESP32 était la communication pair-à-pair à l'aide du protocole LoRaWAN avec un autre microcontrôleur du même type. L'objectif était, ici, de se placer dans un cas d'utilisation où notre microcontrôleur se trouverait en extérieur ou du moins dans une zone non couverte par le WIFI et qu'il voudrait envoyer un signal/une alerte par mail (d'où l'utilisation d'un protocole longue distance tel que LoRaWAN). 
+
+On a donc mis en place cette communication entre les deux microcontrôleurs, puis, implanté le tout sur le serveur web.
+
+<br />
+<p align="center">
+  <a href="https://randomnerdtutorials.com/esp32-lora-rfm95-transceiver-arduino-ide/">
+    <img src="images/lora_wifi.png" alt="Logo" width="500"><br />
+    <i>Exemple avec capteur d'humidité</i>
+  </a>
+</p>
+
 
 ## Pour aller plus loin : capteurs et applications
+
+Malheureusement, nous n'avons pas eu l'occasion d'implanter la lecture d'un véritable capteur. Le projet peut donc servir de point de départ pour quelqu'un qui souhaite implanter de l'IoT dans un cas d'utilisation quelconque.
+
+On peut par exemple imaginer :
+* Capteur de température
+* Capteur d'humidité
+* Accéléromètre / Gyroscope
+* Capteur de lumière
+* etc...
 
 ## Cloner le projet
 
 ### Prérequis
 
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
+* Deux cartes [TTGO ESP32 compatible LoRa32 V2.1](https://www.amazon.fr/TTGO-Compteur-Pixels-Version-Bluetooth/dp/B07SFJ86FG/ref=sr_1_1?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dchild=1&keywords=TTGO+Lora32&qid=1606916220&sr=8-1)
+* Un câble micro-USB compatible
+* Un PC sous MacOS / Linux / Windows avec une interface USB
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<!-- USAGE EXAMPLES -->
-
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+1. Télécharger et installer [VS Code](https://code.visualstudio.com/)
+2. Installer l'extension [Platform.io](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide)
+3. Cloner le projet avec git
+4. Importer le projet dans Platform.io
+5. Téléverser le code sur l'emmetteur en changeant dans `/src/board_def.h`
+```c
+#define LORA_SENDER 1
+```
+6. Téléverser le code sur le serveur en changeant dans `/src/board_def.h`
+```c
+#define LORA_SENDER 0
+```
