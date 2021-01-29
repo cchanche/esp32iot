@@ -337,7 +337,7 @@ void loop()
           }
           display.clear();
           display.drawString(display.getWidth() / 2, display.getHeight() / 2, recv);
-          String info = "RSSI = " + String(LoRa.packetRssi() + "dBm");
+          String info = "RSSI = " + String(LoRa.packetRssi()) + "dBm";
           display.drawString(display.getWidth() / 2, display.getHeight() / 2 - 16, info);
           display.display();
           events.send(info.c_str(),"sensor_RSSI",millis());
