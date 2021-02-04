@@ -6,7 +6,7 @@
   </a>
 
   <h3 align="center">Projet IoT 3A IBDIoT</h3>
-  <h4 align="center"><i>CHANCHEVRIER KANANE BRANTHONNE EGRETEAU</i></h4>
+  <h4 align="center"><i>CHANCHEVRIER KANANE BRANTHONNE EGRETEAU BOURY</i></h4>
 </p>
 
 ## A propos du projet
